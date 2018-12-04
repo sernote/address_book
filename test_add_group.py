@@ -63,7 +63,6 @@ class TestAddGroup(unittest.TestCase):
     def test_add_empty_group(self):
         wd = self.wd
         self.open_home_page(wd)
-        #login
         self.login(wd, username="admin", password="secret")
         self.open_group_page(wd)
         self.create_group(wd, Group(name ="", header="", footer=""))
