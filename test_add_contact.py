@@ -17,13 +17,8 @@ class TestAddContact(unittest.TestCase):
         # open home page
         wd.get("http://localhost/addressbook/")
 
-    def login(self, wd):
-        # login
-        wd.find_element_by_name("user").click()
-        wd.find_element_by_name("user").clear()
-        wd.find_element_by_name("user").send_keys("admin")
-
     def login(self, wd, username, password):
+        self.open_homepage(wd)
         wd.find_element_by_name("user").click()
         wd.find_element_by_name("user").clear()
         wd.find_element_by_name("user").send_keys(username)
@@ -89,6 +84,7 @@ class TestAddContact(unittest.TestCase):
         wd.find_element_by_name("notes").clear()
         wd.find_element_by_name("notes").send_keys(Contact.notes)
         wd.find_element_by_xpath("(//input[@name='submit'])[2]").click()
+        self.return_homepage(wd)
 
     def return_homepage(self, wd):
         # return to home page
@@ -100,7 +96,6 @@ class TestAddContact(unittest.TestCase):
 
     def test_add_contact(self):
         wd = self.wd
-        self.open_homepage(wd)
         self.login(wd, username="admin", password="secret")
         self.create_contact(wd,Contact(firstname="aasfasfasf", middlename="asfasfasafs", lastname="asdfasdfsdfasdf",
                             nickname="asdfasdf", title="asvdsadv", company="czvsavwacvsd", address="sadvwrevsv",
@@ -108,12 +103,10 @@ class TestAddContact(unittest.TestCase):
                             email="hfhwfwb@habdhfa.ru", email2="hbsadlhi@lbhal.ru", email3="bsalhdhflsdbflh@basdflhsdk.ru",
                             homepage="www.bibuhbubu.ru", address2="fsadfsadfsdfsdf", phone2="asdfsadfasdfasdfsdfs",
                             notes="asdfasdfsadfsadfasdfasd"))
-        self.return_homepage(wd)
         self.logout(wd)
 
     def test_add_empty_contact(self):
         wd = self.wd
-        self.open_homepage(wd)
         self.login(wd, username="admin", password="secret")
         self.create_contact(wd, Contact (firstname="", middlename="", lastname="",
                             nickname="", title="", company="", address="",
@@ -121,7 +114,6 @@ class TestAddContact(unittest.TestCase):
                             email="", email2="", email3="",
                             homepage="", address2="", phone2="",
                             notes=""))
-        self.return_homepage(wd)
         self.logout(wd)
 
     def is_element_present(self, how, what):
