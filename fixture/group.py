@@ -27,7 +27,7 @@ class Grouphelper:
         wd.find_element_by_name("submit").click()
         self.return_to_groups_page()
 
-    def edit_first_group(self, Group):
+    def edit_first(self, Group):
         wd = self.app.wd
         self.open_group_page()
         # выбрать первую группу
@@ -48,7 +48,7 @@ class Grouphelper:
         wd.find_element_by_name('update').click()
         self.return_to_groups_page()
 
-    def delete_first_group(self):
+    def delete_first(self):
         wd = self.app.wd
         self.open_group_page()
         #выбрать первую группу

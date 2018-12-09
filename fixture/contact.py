@@ -63,7 +63,7 @@ class Contacthelper:
         wd.find_element_by_xpath("(//input[@name='submit'])[2]").click()
         self.return_homepage()
 
-    def edit_first_contact(self, Contact):
+    def edit_first(self, Contact):
         wd = self.app.wd
         wd.find_element_by_xpath("//img[@alt='Edit']").click()
         wd.find_element_by_name("firstname").click()
@@ -123,7 +123,7 @@ class Contacthelper:
         wd.find_element_by_name('update').click()
         self.return_homepage()
 
-    def delete_first_contact(self):
+    def delete_first(self):
         wd = self.app.wd
         # выбрать первый контакт
         wd.find_element_by_name('selected[]').click()
