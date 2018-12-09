@@ -1,5 +1,4 @@
 
-
 class Contacthelper:
     def __init__(self, app):
         self.app= app
@@ -63,6 +62,17 @@ class Contacthelper:
         wd.find_element_by_name("notes").send_keys(Contact.notes)
         wd.find_element_by_xpath("(//input[@name='submit'])[2]").click()
         self.return_homepage()
+
+
+    def delete_first_contact(self):
+        wd = self.app.wd
+        # выбрать первый контакт
+        wd.find_element_by_name('selected[]').click()
+        # подтвердить удаление
+        wd.find_element_by_xpath("// input[ @ value = 'Delete']").click()
+        wd.switch_to_alert().accept()
+        self.app.wd.implicitly_wait(5)
+
 
     def return_homepage(self):
         # return to home page
