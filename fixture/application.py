@@ -3,7 +3,6 @@ from fixture.session import Sessionhelper
 from fixture.group import Grouphelper
 from fixture.contact import Contacthelper
 
-
 class Application:
     def __init__(self):
         self.wd = webdriver.Firefox()
