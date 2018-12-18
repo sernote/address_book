@@ -3,8 +3,14 @@ class Contacthelper:
     def __init__(self, app):
         self.app= app
 
+    def open_home_page(self):
+        wd = self.app.wd
+        if not wd.current_url.endswith('addressbook/') and len(wd.find_elements_by_name("searchstring")) > 0:
+            wd.find_element_by_link_text("home").click()
+
     def create(self, contact):
         wd = self.app.wd
+        self.open_home_page()
         wd.find_element_by_link_text("add new").click()
         self.fill_forms(contact)
         wd.find_element_by_xpath("(//input[@name='submit'])[2]").click()
@@ -12,6 +18,7 @@ class Contacthelper:
 
     def edit_first(self, contact):
         wd = self.app.wd
+        self.open_home_page()
         wd.find_element_by_xpath("//img[@alt='Edit']").click()
         self.fill_forms(contact)
         wd.find_element_by_name('update').click()
@@ -48,6 +55,7 @@ class Contacthelper:
 
     def delete_first(self):
         wd = self.app.wd
+        self.open_home_page()
         # выбрать первый контакт
         wd.find_element_by_name('selected[]').click()
         # подтвердить удаление
@@ -57,7 +65,8 @@ class Contacthelper:
 
     def return_homepage(self):
         wd = self.app.wd
-        wd.find_element_by_link_text("home").click()
+        if not wd.current_url.endswith('addressbook/') and len(wd.find_elements_by_name("searchstring")) > 0:
+            wd.find_element_by_link_text("home page").click()
 
     def count(self):
         wd = self.app.wd
