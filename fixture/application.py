@@ -6,6 +6,7 @@ from fixture.contact import Contacthelper
 class Application:
     def __init__(self):
         self.wd = webdriver.Firefox()
+        self.wd.implicitly_wait(1)
         self.session= Sessionhelper(self)
         self.group= Grouphelper(self)
         self.contact = Contacthelper(self)
@@ -16,7 +17,6 @@ class Application:
             return True
         except:
             return False
-
 
     def open_home_page(self):
         wd = self.wd
