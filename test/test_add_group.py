@@ -4,7 +4,7 @@ from model.group import Group
 
 def test_add_group(app):
     old_groups = app.group.get_groups_list()
-    group = Group(name="asdasdas", header="asdasdasd", footer="asdasdasd")
+    group = Group(name="asdafsdas", header="asdasdasd", footer="asdasdasd")
     app.group.create(group)
     new_groups = app.group.get_groups_list()
     assert len(old_groups)+1 == len(new_groups)
