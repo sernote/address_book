@@ -16,7 +16,7 @@ class Contacthelper:
         wd.find_element_by_link_text("add new").click()
         self.fill_forms(contact)
         wd.find_element_by_xpath("(//input[@name='submit'])[2]").click()
-        self.return_homepage()
+        self.open_home_page()
         self.contact_cache = None
 
     def edit_first(self, contact):
