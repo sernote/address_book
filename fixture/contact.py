@@ -1,4 +1,5 @@
 from model.contact import Contact
+import time
 
 class Contacthelper:
     def __init__(self, app):
@@ -6,7 +7,7 @@ class Contacthelper:
 
     def open_home_page(self):
         wd = self.app.wd
-        if not (wd.current_url.endswith('addressbook/') and len(wd.find_elements_by_name("searchstring")) > 0):
+        if not (wd.current_url.endswith('addressbook/') and len(wd.find_elements_by_name("searchstring")) == 1):
             wd.find_element_by_link_text("home").click()
 
     def create(self, contact):
@@ -61,11 +62,11 @@ class Contacthelper:
         # подтвердить удаление
         wd.find_element_by_xpath("// input[ @ value = 'Delete']").click()
         wd.switch_to_alert().accept()
-        self.app.wd.implicitly_wait(5)
+        self.open_home_page()
 
     def return_homepage(self):
         wd = self.app.wd
-        if not (wd.current_url.endswith('addressbook/') and len(wd.find_elements_by_name("searchstring")) > 0):
+        if not (wd.current_url.endswith('addressbook/') and len(wd.find_elements_by_name("searchstring")) == 1):
             wd.find_element_by_link_text("home page").click()
 
     def count(self):
@@ -81,5 +82,5 @@ class Contacthelper:
             firstname_text = element.find_element_by_xpath('.//td[3]').text
             lastname_text = element.find_element_by_xpath('.//td[2]').text
             id= element.find_element_by_name('selected[]').get_attribute('value')
-            contacts.append(Contact(firstname=firstname_text, lastname= lastname_text, id=id))
+            contacts.append(Contact(firstname=firstname_text, lastname=lastname_text, id=id))
         return contacts
