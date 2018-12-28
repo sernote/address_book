@@ -7,7 +7,7 @@ class Contacthelper:
 
     def open_home_page(self):
         wd = self.app.wd
-        if not (wd.current_url.endswith('addressbook/') and len(wd.find_elements_by_name("searchstring")) == 1):
+        if not (wd.current_url.endswith('addressbook/') and len(wd.find_elements_by_name("searchstring")) > 0):
             wd.find_element_by_link_text("home").click()
 
     def create(self, contact):
@@ -17,6 +17,7 @@ class Contacthelper:
         self.fill_forms(contact)
         wd.find_element_by_xpath("(//input[@name='submit'])[2]").click()
         self.return_homepage()
+        self.contact_cache = None
 
     def edit_first(self, contact):
         wd = self.app.wd
@@ -24,6 +25,7 @@ class Contacthelper:
         wd.find_element_by_xpath("//img[@alt='Edit']").click()
         self.fill_forms(contact)
         wd.find_element_by_name('update').click()
+        self.contact_cache = None
 
     def fill_forms(self, contact):
         wd = self.app.wd
@@ -47,6 +49,7 @@ class Contacthelper:
         self.change_field_value('notes', contact.notes)
         self.change_field_value('notes', contact.email)
 
+
     def change_field_value(self, field_name, text):
         wd = self.app.wd
         if text is not None:
@@ -63,10 +66,11 @@ class Contacthelper:
         wd.find_element_by_xpath("// input[ @ value = 'Delete']").click()
         wd.switch_to_alert().accept()
         self.open_home_page()
+        self.contact_cache = None
 
     def return_homepage(self):
         wd = self.app.wd
-        if not (wd.current_url.endswith('addressbook/') and len(wd.find_elements_by_name("searchstring")) == 1):
+        if not (wd.current_url.endswith('addressbook/') and len(wd.find_elements_by_name("searchstring")) > 0):
             wd.find_element_by_link_text("home page").click()
 
     def count(self):
@@ -74,13 +78,16 @@ class Contacthelper:
         self.return_homepage()
         return len(wd.find_elements_by_name('selected[]'))
 
+    contact_cache = None
+
     def get_contacts_list(self):
-        wd = self.app.wd
-        self.open_home_page()
-        contacts = []
-        for element in wd.find_elements_by_name('entry'):
-            firstname_text = element.find_element_by_xpath('.//td[3]').text
-            lastname_text = element.find_element_by_xpath('.//td[2]').text
-            id= element.find_element_by_name('selected[]').get_attribute('value')
-            contacts.append(Contact(firstname=firstname_text, lastname=lastname_text, id=id))
-        return contacts
+        if self.contact_cache is None:
+            wd = self.app.wd
+            self.open_home_page()
+            self.contact_cache = []
+            for element in wd.find_elements_by_name('entry'):
+                firstname_text = element.find_element_by_xpath('.//td[3]').text
+                lastname_text = element.find_element_by_xpath('.//td[2]').text
+                id= element.find_element_by_name('selected[]').get_attribute('value')
+                self.contact_cache.append(Contact(firstname=firstname_text, lastname=lastname_text, id=id))
+        return list(self.contact_cache)
