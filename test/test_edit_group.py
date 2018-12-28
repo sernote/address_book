@@ -1,7 +1,7 @@
 from model.group import Group
 from random import randrange
 
-def test_edit_first_group(app):
+def test_edit_some_group(app):
     if app.group.count() == 0:
         app.group.create(Group(name='Testname',header="testhead", footer="testfoot"))
     old_groups = app.group.get_groups_list()
