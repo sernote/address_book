@@ -97,9 +97,12 @@ class Contacthelper:
             for element in wd.find_elements_by_name('entry'):
                 firstname_text = element.find_element_by_xpath('.//td[3]').text
                 lastname_text = element.find_element_by_xpath('.//td[2]').text
+                address_text = element.find_element_by_xpath('.//td[4]').text
                 id= element.find_element_by_name('selected[]').get_attribute('value')
+                all_mails = element.find_element_by_xpath('.//td[5]').text
                 all_phones = element.find_element_by_xpath('.//td[6]').text
                 self.contact_cache.append(Contact(firstname=firstname_text, lastname=lastname_text, id=id,
+                                                  address=address_text, all_mails_from_page=all_mails,
                                                   all_phones_from_page=all_phones))
         return list(self.contact_cache)
 
@@ -124,12 +127,16 @@ class Contacthelper:
         firstname = wd.find_element_by_name('firstname').get_attribute('value')
         lastname = wd.find_element_by_name('lastname').get_attribute('value')
         id = wd.find_element_by_name('id').get_attribute('value')
+        address = wd.find_element_by_name('address').get_attribute('value')
+        email = wd.find_element_by_name('email').get_attribute('value')
+        email2 = wd.find_element_by_name('email2').get_attribute('value')
+        email3 = wd.find_element_by_name('email3').get_attribute('value')
         home = wd.find_element_by_name('home').get_attribute('value')
         work = wd.find_element_by_name('work').get_attribute('value')
         mobile = wd.find_element_by_name('mobile').get_attribute('value')
         phone2 = wd.find_element_by_name('phone2').get_attribute('value')
-        return Contact(firstname=firstname, lastname=lastname, id= id, home=home, work= work, mobile = mobile,
-                       phone2=phone2)
+        return Contact(firstname=firstname, lastname=lastname, id=id, address=address, email=email, email2=email2,
+                       email3=email3, home=home, work=work, mobile=mobile, phone2=phone2)
 
     def get_contact_info_from_view_page(self, index):
         wd = self.app.wd
