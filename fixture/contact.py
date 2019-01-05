@@ -84,7 +84,7 @@ class Contacthelper:
 
     def count(self):
         wd = self.app.wd
-        self.return_homepage()
+        self.open_home_page()
         return len(wd.find_elements_by_name('selected[]'))
 
     contact_cache = None
@@ -146,5 +146,5 @@ class Contacthelper:
         mobile = re.search("M: (.*)", text).group(1)
         work = re.search("W: (.*)", text).group(1)
         phone2 = re.search("P: (.*)", text).group(1)
-        return Contact(id=id, home=home, work=work, mobile=mobile,
+        return Contact(id=id, home=home, mobile=mobile,  work=work,
                        phone2=phone2)
