@@ -70,7 +70,6 @@ class Grouphelper:
         self.return_to_groups_page()
         self.group_cache = None
 
-
     def return_to_groups_page(self):
         wd = self.app.wd
         if not (wd.current_url.endswith('/group.php') and len(wd.find_elements_by_name("new")) > 0):

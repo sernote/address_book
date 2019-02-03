@@ -9,12 +9,12 @@ class DbFixture:
         self.name = name
         self.user = user
         self.password = password
-        self.connection = pymysql.connect(host=host, database=name, user=user, password=password)
+        self.connection = pymysql.connect(host=host, database=name, user=user, password=password, autocommit=True)
 
     def destroy(self):
         self.connection.close()
 
-    def get_group_list(self):
+    def get_group_list(self):  # возвращает список объектов-групп из БД
         list = []
         cursor = self.connection.cursor()
         try:
@@ -22,6 +22,6 @@ class DbFixture:
             for row in cursor:
                 (id, name, header, footer) = row
                 list.append(Group(id=str(id), name=name, header=header, footer=footer))
-                return list
+            return list
         finally:
             cursor.close()
