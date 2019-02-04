@@ -11,7 +11,6 @@ def test_edit_some_group(app, db, json_groups, check_ui):
     group.id = old_groups[index].id
     app.group.edit_by_index(index, group)
     new_groups = db.get_group_list()
-    assert len(old_groups) == len(new_groups)
     print(old_groups[index])
     old_groups[index] = group
     print(old_groups[index])
