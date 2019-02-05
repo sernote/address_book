@@ -40,3 +40,6 @@ class Contact:
         else:
             return maxsize
 
+    def by_firstname_key(self):
+        return self.firstname
+

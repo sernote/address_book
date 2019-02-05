@@ -18,3 +18,6 @@ class Group:
             return int(self.id)
         else:
             return maxsize
+
+    def by_name_key(self):
+        return self.name
