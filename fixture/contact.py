@@ -32,6 +32,14 @@ class Contacthelper:
         wd.find_element_by_name('update').click()
         self.contact_cache = None
 
+    def edit_by_id(self, id, contact):
+        wd = self.app.wd
+        self.open_home_page()
+        wd.find_element_by_xpath('//input[@id="%s"]/../..' % id).find_element_by_xpath(".//img[@alt='Edit']").click()
+        self.fill_forms(contact)
+        wd.find_element_by_name('update').click()
+        self.contact_cache = None
+
     def fill_forms(self, contact):
         wd = self.app.wd
         self.change_field_value('firstname', contact.firstname)
