@@ -54,7 +54,6 @@ class Contacthelper:
         self.change_field_value('notes', contact.notes)
         self.change_field_value('notes', contact.email)
 
-
     def change_field_value(self, field_name, text):
         wd = self.app.wd
         if text is not None:
@@ -65,6 +64,17 @@ class Contacthelper:
     def delete_first(self):
         wd = self.app.wd
         self.delete_by_index(0)
+
+    def delete_by_id(self, id):
+        wd = self.app.wd
+        self.open_home_page()
+        # выбрать первый контакт
+        wd.find_element_by_id('%s' % id).click()  # единственный элемент на странице с id - чек-боксы
+        # подтвердить удаление
+        wd.find_element_by_xpath("// input[ @ value = 'Delete']").click()
+        wd.switch_to_alert().accept()
+        self.open_home_page()
+        self.contact_cache = None
 
     def delete_by_index(self, index):
         wd = self.app.wd
@@ -112,7 +122,6 @@ class Contacthelper:
         row = wd.find_elements_by_name('entry')[index]
         cell = row.find_elements_by_tag_name('td')[7]
         cell.find_element_by_tag_name('a').click()
-
 
     def open_contact_view_by_index(self, index):
         wd = self.app.wd
