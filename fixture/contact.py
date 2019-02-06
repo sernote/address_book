@@ -73,11 +73,15 @@ class Contacthelper:
         wd = self.app.wd
         self.delete_by_index(0)
 
+    def select_by_id(self, id):
+        wd = self.app.wd
+        wd.find_element_by_id('%s' % id).click()  # единственный элемент на странице с id - чек-боксы
+
     def delete_by_id(self, id):
         wd = self.app.wd
         self.open_home_page()
         # выбрать первый контакт
-        wd.find_element_by_id('%s' % id).click()  # единственный элемент на странице с id - чек-боксы
+        self.select_by_id(id)
         # подтвердить удаление
         wd.find_element_by_xpath("// input[ @ value = 'Delete']").click()
         wd.switch_to_alert().accept()
@@ -165,3 +169,12 @@ class Contacthelper:
         phone2 = re.search("P: (.*)", text).group(1)
         return Contact(id=id, home=home, mobile=mobile,  work=work,
                        phone2=phone2)
+
+    def add_in_group_by_id(self, contact_id, group_id):
+        wd = self.app.wd
+        self.open_home_page()
+        self.select_by_id(contact_id)
+        element = wd.find_element_by_name('to_group')
+        element.click()
+        element.find_element_by_xpath("option[ @ value = '%s']" % group_id).click()
+        wd.find_element_by_name('add').click()
